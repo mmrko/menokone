@@ -251,17 +251,18 @@
 
     const cache = JSON.parse(localStorage.getItem("cache") || "{}")
 
+    if (!cache.lastUpdated || new Date(cache.lastUpdated) < new Date() - CACHE_TTL) {
+      refetchCards((cards) => {
+        debugger
+        renderCards(cards)
 
-    refetchCards((cards) => {
-      debugger
-      renderCards(cards)
-
-      localStorage.setItem("cache", JSON.stringify({ cards, lastUpdated: new Date().toISOString() }))
-    })
+        localStorage.setItem("cache", JSON.stringify({ cards, lastUpdated: new Date().toISOString() }))
+      })
+    }
 
 
     function refetchCards(cb) {
-      fetch(`https://floud-prod-api-management.azure-api.net/api/v1/events/all?authorize=false&pageNumber=1&pageSize=400&excludeMoviesAndExhibitions=true&includeAdults=true&includeKids=true&includeSeniors=true&locations=Helsinki&fromDate=${new
+      fetch(`https://floud-prod-api-management.azure-api.net/api/v1/events/all?authorize=false&pageNumber=1&pageSize=500&excludeMoviesAndExhibitions=true&includeAdults=true&includeKids=true&includeSeniors=true&locations=Helsinki&fromDate=${new
         Date().toISOString()}`, getOptions
       ).then(async (eventsRes) => {
         const data = await eventsRes.json()
