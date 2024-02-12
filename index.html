@@ -206,6 +206,10 @@
     }
 
     @media only screen and (max-device-width: 480px) {
+      .page-title {
+        -webkit-text-stroke-width: 0;
+      }
+
       .heart-container {
         display: block;
       }
@@ -255,6 +259,7 @@
     const CARD_COUNT = isMobile() ? 50 : 9
     const CARD_OFFSET = 0
     const HOURS_UNTIL_EVENT = window.location.search.includes("hours_until") ? new URLSearchParams(window.location.search).get("hours_until") : null
+    const MAX_CARD_TITLE_LENGTH = isMobile() ? 70 : 80
     const timeZone = "Europe/Helsinki";
     const dateTimeOptions = {
       weekday: 'short',
@@ -390,7 +395,7 @@
 
     function createCard(cardData) {
       const card = document.createElement('div');
-      const title = (cardData.title || '').length > 80 ? (cardData.title || '').slice(0, 77) + '...' : cardData.title;
+      const title = (cardData.title || '').length > MAX_CARD_TITLE_LENGTH ? (cardData.title || '').slice(0, MAX_CARD_TITLE_LENGTH - 3) + '...' : cardData.title;
       let dateStr = ""
 
       if (cardData.date)
