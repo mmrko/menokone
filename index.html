@@ -389,7 +389,7 @@
             badge: categories[item.Category],
             title: item.Name,
             img: item.ImageUrl || "placeholder.png",
-            url: `https://www.hs.fi/menokone/events/${item.Id}`,
+            url: `https://www.hs.fi/menokone/events/${item.EventId}`,
             date,
             isToday: isToday(date.Start) || todayIsBetween(date.StartUtc, date.EndUtc),
             location: `${item.VenueName}${item.Address ? ', ' + item.Address.split(",")[0] : ''}`,
